@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Matrices } from "./matrices/Matrices";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ export const AppRouter: React.FC = () => {
           <div>page 1</div>
         </Route>
         <Route path="/">
-          <div>Home</div>
+          <Matrices />
         </Route>
       </Switch>
     </BrowserRouter>
