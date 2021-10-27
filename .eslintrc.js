@@ -8,6 +8,9 @@ module.exports = {
     "unicorn", // Various awesome ESLint rules 
     "prettier", //Runs Prettier as an ESLint rule and reports differences as individual ESLint issues.
     "deprecation", // reports usage of deprecated code
+    "import",
+    "react",
+    "jsx-a11y"
   ],
   extends: [
     "airbnb-typescript", // use airbnb ruleset for typescript as base
