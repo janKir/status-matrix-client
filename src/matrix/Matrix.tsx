@@ -2,6 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { Cell } from "./Cell";
+import { Values } from "./Values";
+import { css } from "@linaria/core";
 
 const GET_MATRIX = gql`
   query GetMatrix($id: ID!) {
@@ -55,6 +57,7 @@ export const Matrix: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <Values />
     </div>
   );
 };
