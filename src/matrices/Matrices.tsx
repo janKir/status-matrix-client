@@ -1,5 +1,6 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 const GET_MATRICES = gql`
   query Matrices {
@@ -24,8 +25,10 @@ export const Matrices: React.FC = () => {
         <div>
           {data.matrices?.map(({ id, name, description }) => (
             <div key={id}>
-              {name}
-              <small>{description}</small>
+              <Link to={`/matrix/${id}`}>
+                {name}
+                <small>{description}</small>
+              </Link>
             </div>
           ))}
         </div>
