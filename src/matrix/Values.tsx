@@ -1,7 +1,9 @@
 import React from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { css, cx } from "@linaria/core";
+
+import { ClickableBox } from "../common/ClickableBox";
 
 const GET_VALUES = gql`
   query GetValues($matrixId: ID!) {
@@ -23,19 +25,24 @@ export const Values: React.FC = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className={styles.container}>
+    <>
+      <ClickableBox className={styles.valueBox}>No value</ClickableBox>
       {data.valuesByMatrix.map(({ id, name, color }) => (
-        <div key={id} className={styles.valueBox} style={{ "--color": color }}>
+        <ClickableBox
+          key={id}
+          className={styles.valueBox}
+          backgroundColor={color}
+        >
           {name}
-        </div>
+        </ClickableBox>
       ))}
-      <div
+      <ClickableBox
         className={cx(styles.valueBox, styles.newValueText)}
-        style={{ "--color": "lightgrey" }}
+        backgroundColor="lightgrey"
       >
         Create a new Value
-      </div>
-    </div>
+      </ClickableBox>
+    </>
   );
 };
 
@@ -43,6 +50,7 @@ const styles = {
   container: css`
     display: flex;
     flex-direction: row;
+    margin-top: 30px;
   `,
   valueBox: css`
     width: 100px;
