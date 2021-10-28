@@ -46,7 +46,7 @@ export const Matrix: React.FC = () => {
           {rows.map(({ id: rowId, name }) => (
             <tr key={rowId}>
               <th>{name}</th>
-              {columns.map(({ id: columnId, name }) => (
+              {columns.map(({ id: columnId }) => (
                 <td key={columnId}>
                   <Cell rowId={rowId} columnId={columnId} />
                 </td>
