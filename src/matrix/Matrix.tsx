@@ -35,21 +35,25 @@ export const Matrix: React.FC = () => {
       <p>{description}</p>
       <table>
         <thead>
-          <th>#</th>
-          {columns.map(({ id: columnId, name }) => (
-            <td key={columnId}>{name}</td>
-          ))}
-        </thead>
-        {rows.map(({ id: rowId, name }) => (
-          <tr key={rowId}>
-            <th>{name}</th>
+          <tr>
+            <th>#</th>
             {columns.map(({ id: columnId, name }) => (
-              <td key={columnId}>
-                <Cell rowId={rowId} columnId={columnId} />
-              </td>
+              <th key={columnId}>{name}</th>
             ))}
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {rows.map(({ id: rowId, name }) => (
+            <tr key={rowId}>
+              <th>{name}</th>
+              {columns.map(({ id: columnId, name }) => (
+                <td key={columnId}>
+                  <Cell rowId={rowId} columnId={columnId} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
