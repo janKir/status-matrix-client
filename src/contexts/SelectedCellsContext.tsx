@@ -1,11 +1,16 @@
 import React from "react";
 
+interface SelectedCell {
+  rowId: string;
+  columnId: string;
+}
 interface SelectedCellsContextType {
-  selectedCells: string[];
-  selectCell(id: string): void;
-  selectSingleCell(id: string): void;
-  unselectCell(id: string): void;
+  selectedCells: SelectedCell[];
+  selectCell(cell: SelectedCell): void;
+  selectSingleCell(cell: SelectedCell): void;
+  unselectCell(cell: SelectedCell): void;
   clearSelection(): void;
+  checkIsSelected(cell: SelectedCell): boolean;
 }
 
 const SelectedCellsContext = React.createContext<SelectedCellsContextType>({
@@ -14,31 +19,48 @@ const SelectedCellsContext = React.createContext<SelectedCellsContextType>({
   selectSingleCell: () => {},
   unselectCell: () => {},
   clearSelection: () => {},
+  checkIsSelected: () => false,
 });
 
 export const SelectedCellsContextProvider: React.FC = ({ children }) => {
-  const [selectedCells, setSelectedCells] = React.useState<string[]>([]);
+  const [selectedCells, setSelectedCells] = React.useState<SelectedCell[]>([]);
+
+  const checkIsSelected = React.useCallback(
+    (cell: SelectedCell) =>
+      selectedCells.some(
+        (otherCell) =>
+          cell.rowId === otherCell.rowId && cell.columnId === otherCell.columnId
+      ),
+    [selectedCells]
+  );
+
   const selectCell = React.useCallback(
-    (id: string) => {
-      if (!selectedCells.includes(id)) {
-        setSelectedCells([...selectedCells, id]);
+    (cell: SelectedCell) => {
+      if (!checkIsSelected(cell)) {
+        setSelectedCells([...selectedCells, cell]);
       }
     },
-    [selectedCells]
+    [checkIsSelected, selectedCells]
   );
-  const selectSingleCell = React.useCallback((id: string) => {
-    setSelectedCells([id]);
+
+  const selectSingleCell = React.useCallback((cell: SelectedCell) => {
+    console.log("selectSingleCell", cell);
+    setSelectedCells([cell]);
   }, []);
+
   const unselectCell = React.useCallback(
-    (id: string) => {
-      if (selectedCells.includes(id)) {
-        setSelectedCells(
-          selectedCells.filter((selectedId) => selectedId !== id)
-        );
-      }
+    (cell: SelectedCell) => {
+      setSelectedCells(
+        selectedCells.filter(
+          (otherCell) =>
+            cell.rowId !== otherCell.rowId &&
+            cell.columnId !== otherCell.columnId
+        )
+      );
     },
     [selectedCells]
   );
+
   const clearSelection = React.useCallback(() => {
     setSelectedCells([]);
   }, []);
@@ -51,6 +73,7 @@ export const SelectedCellsContextProvider: React.FC = ({ children }) => {
         selectSingleCell,
         unselectCell,
         clearSelection,
+        checkIsSelected,
       }}
     >
       {children}

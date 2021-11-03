@@ -8,7 +8,14 @@ export const ValuesContainer: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {selectedCells.length > 0 ? <Values /> : <div>Select a cell</div>}
+      {selectedCells.length > 0 ? (
+        <Values
+          rowId={selectedCells[0].rowId}
+          columnId={selectedCells[0].columnId}
+        />
+      ) : (
+        <div>Select a cell</div>
+      )}
     </div>
   );
 };
